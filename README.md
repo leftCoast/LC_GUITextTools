@@ -1,2 +1,2 @@
-# LC_textView
-Library to create rectangle with flowing text.
+# LC_GUITextTools
+A library to manage text on the screen.

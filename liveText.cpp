@@ -16,22 +16,17 @@ liveText::liveText(int x,int y,int width,int height,int framerateMs,bool inLoop)
 liveText::~liveText(void) { }
 
 
-
-// Need some running call to auto hookup.
-bool   liveText::wantRefresh(void) {
-  
-  hookup();
-  return label::wantRefresh();
-}
-
-
+// Add in a color to out timed color map.
 void  liveText::addAColor(int timeMs,colorObj* color) { 
 
-    if (timeMs>maxTime) {
-      maxTime = timeMs;
-    }
-    colorMultiMap::addColor(timeMs,color);
-  }
+	hookup();											// We add colors at the start. Good hookup() time!
+	start();												// And a great place to start our timer too!
+	if (timeMs>maxTime) {							// If this is beyond our max time..
+		maxTime = timeMs;								// Set our max time to fit.
+	}
+	colorMultiMap::addColor(timeMs,color);		// Pop it into the color map.
+}
+
 
 
 void liveText::hold(void) { holding = true; }

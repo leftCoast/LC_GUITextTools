@@ -55,7 +55,6 @@ class liveText : public label,
 				void		hold(void);
 				void		release(bool reset=true);
 
-	virtual	bool		wantRefresh(void);        
 	virtual	void		idle(void);
 				void		setCalcColor(void);
   

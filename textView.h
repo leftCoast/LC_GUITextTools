@@ -47,7 +47,7 @@ class lineMarker : public linkListObj {
 
 
 // This guy has the text and does the math to maintain the line breaks. No links to
-// The displaying of the text beyond knowing hom many chars make up a line. And the 
+// The displaying of the text beyond knowing how many chars make up a line. And the 
 // rule of text flow and formatting.
 class lineManager : public linkList {
 

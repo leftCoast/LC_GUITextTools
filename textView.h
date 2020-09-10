@@ -51,28 +51,29 @@ class lineMarker : public linkListObj {
 // rule of text flow and formatting.
 class lineManager : public linkList {
 
-  public:
-          lineManager(void);
-  virtual ~lineManager(void);
+	public:
+				lineManager(void);
+	virtual	~lineManager(void);
 
-          void        setWidth(int widthChars);                       // Set how many chars wide the lines are.
-          void        setText(char* text);                            // A possibly giant NULL terminated c string.
-          void        appendText(char* text);                         // Add this to the end of our text.
-          void        insertText(int index,char* text);               // Stick a NULL terminated substring in at this index.
-          void        deleteText(int startIndex,int endIndex);        // Remove some text from middle, beginning? End?
-          void        indexAll(void);                                 // Index all the text.
-          void        indexSet(int endLineNum);                       // Index a subset of lines.
-          bool        upToDate(void);                                 // Before wasting yet more time. Lets just see if we can sort this any more than it is.
-          char*       formatLine(int lineNum);                        // And the why of alll this nonsense. Format us a line, this one.
-          bool        newMarker(int* index,bool* hardBreak);          // Starting at index, make a new marker. Return true for more text available.
-          int         getExistingLineNum(int index);                  // Want to know if this lineMarker exists. Return it's index if found. -1 if not.
-          int         getLineNum(int index);                          // Want the line this guy is in, Index as neccisary.
-          int         getNumLines(void);                              // Count ALL the lines. Index as neccisary.
-          void        trimList(int index);                            // Find the line that includes this index. Delete it and its tail.
-          
-          char*       mTextBuff;                                      // Our string of text to manage.
-          int         mWidthChars;
-          char*       mOutBuff;
+				void        setWidth(int widthChars);						// Set how many chars wide the lines are.
+				void        setText(char* text);								// A possibly giant NULL terminated c string.
+				void        appendText(char* text);							// Add this to the end of our text.
+				void        insertText(int index,char* text);			// Stick a NULL terminated substring in at this index.
+				void        deleteText(int startIndex,int endIndex);	// Remove some text from middle, beginning? End?
+				void        indexAll(void);									// Index all the text.
+				void        indexSet(int endLineNum);						// Index a subset of lines.
+				bool        upToDate(void);									// Before wasting yet more time. Lets just see if we can sort this any more than it is.
+				char*       formatLine(int lineNum);						// And the why of alll this nonsense. Format us a line, this one.
+				bool        newMarker(int* index,bool* hardBreak);		// Starting at index, make a new marker. Return true for more text available.
+				int         getExistingLineNum(int index);				// Want to know if this lineMarker exists. Return it's index if found. -1 if not.
+				int         getLineNum(int index);							// Want the line this guy is in, Index as neccisary.
+				int         getNumLines(void);								// Count ALL the lines. Index as neccisary.
+				void        trimLastMarker(void);							// KNock out the last marker, just like it said. (Comes in handy)
+				void        trimList(int index);								// Find the line that includes this index. Delete it and its tail.
+
+				char*       mTextBuff;											// Our string of text to manage.
+				int         mWidthChars;
+				char*       mOutBuff;
 };
 
 

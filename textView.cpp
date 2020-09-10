@@ -36,49 +36,49 @@ lineMarker::~lineMarker(void) {  }
 
 void lineMarker::parseText(int index, bool startHardBreak, int widthChars, char* buff) {
 
-  int lastBlank;
+	int lastBlank;
 
-  mStartIndex = index;
-  mEndHBreak = false;
-  if (buff) {
-    if(buff[index]!='\0') {
-      if (widthChars>0) {
-        if(!startHardBreak) {
-          while(buff[index]==' ') index++;
-        }
-        mPrintIndex = index;                    // If we're to print anything it'll start here.
-        lastBlank = mStartIndex - 1;            // Set to impossibility as a flag.
-        widthChars--;                           // bump down allowed space.
-        while ( buff[index] != '\0' &&          // Loop 'till.. End of text
-                buff[index] != EOL &&           // end of line.
-                widthChars) {                   // Ran out of printable chars.
-          if (buff[index] == ' ') {             // See a space?
-            lastBlank = index;                  // Keep track of it. May need it later.
-          }
-          index++;                              // bump up index.
-          widthChars--;                         // bump down allowed space.
-        }
-        switch( buff[index]) {
-          case '\0' : index--;                  // Ran of the end. Step back and..
-          case EOL  : mEndHBreak = true; break; // '\0' or carage return. Hard break.
-          case ' '  : break;                    // Space, do nothing.
-          default :                             // Stopped in txt block.
-            switch (buff[index+1]) {            // We need to see if there's a line break after.
-              case  '\0'  : 
-              case EOL    :
-              case ' '    : break;              // Line or word break, don't sweat it.
-              default :                         // In a text block.
-                if (lastBlank>=mStartIndex) {   // If there was a break back there..
-                  index = lastBlank;            // Just use it and we are done.
-                }
-              break;                            // If not? We're done anyway.
-            }
-          break;
-        }
-      }
-    }
-  }
-  mEndIndex = index;                            // In the end, this is where we stop.
+	mStartIndex = index;											// Save off our starting index with this block of text.
+	mEndHBreak = false;											// Not sure, I assume we default this to false.
+	if (buff) {														// If we even have a buffer.. Sanity.
+		if(buff[index]!='\0') {									// If the index is not pointing at a '\0'. Again, sanity.
+			if (widthChars>0) {									// If the width of chars is >0.. Sanity.
+				if(!startHardBreak) {							// If NOT started with a hard break..
+					while(buff[index]==' ') index++;			// Eat leading blanks.
+				}
+				mPrintIndex = index;								// If we're to print anything it'll start here.
+				lastBlank = mStartIndex - 1;					// Set to impossibility as a flag.
+				widthChars--;										// bump down allowed space.
+				while (	buff[index] != '\0' &&				// Loop 'till.. End of text
+							buff[index] != EOL &&				// end of line.
+                		widthChars) {							// Ran out of printable chars.
+					if (buff[index] == ' ') {					// See a space?
+						lastBlank = index;						// Keep track of it. May need it later.
+					}
+					index++;											// bump up index.
+					widthChars--;									// bump down allowed space.
+				}
+				switch( buff[index]) {
+					case '\0' : index--;                  	// Ran of the end. Step back and..
+					case EOL  : mEndHBreak = true; break;	// '\0' or carage return. Hard break.
+					case ' '  : break;                    	// Space, do nothing.
+					default :                             	// Stopped in txt block.
+						switch (buff[index+1]) {            // We need to see if there's a line break after.
+							case  '\0'  : 
+							case EOL    :
+							case ' '    : break;					// Line or word break, don't sweat it.
+							default :								// In a text block.
+								if (lastBlank>=mStartIndex) {	// If there was a break back there..
+									index = lastBlank;			// Just use it and we are done.
+								}
+							break;									// If not? We're done anyway.
+						}
+					break;
+				}
+			}
+		}
+	}
+	mEndIndex = index;                            		// In the end, this is where we stop.
 }
 
   
@@ -87,7 +87,6 @@ void  lineMarker::formatLine(char* inText, char* outLine, int maxChars) {
   int inIndex;
   int outIndex;
   
-  //rawText(inText);Serial.println();
   inIndex = mPrintIndex;
   outIndex = 0;
   while(inIndex<=mEndIndex&&maxChars) {
@@ -158,45 +157,53 @@ void lineManager::setWidth(int widthChars) {
 // A possibly giant NULL terminated c string.
 void lineManager::setText(char* text) {
 
-  dumpList();
-  if (mTextBuff) {
-    free(mTextBuff);
-  }
-  mTextBuff = (char*)malloc(strlen(text) + 1);
-  if (mTextBuff) {
-    strcpy(mTextBuff, text);
-  }
+	dumpList();													// Dump the list of line formatting.
+	if (mTextBuff) {											// If we have a text buffer..
+		free(mTextBuff);										// Recycle it's RAM.
+		mTextBuff = NULL;										// Flag it as unallocated.
+	}																// Now, if we need to bail, we're ready.
+	if (!text) {												// If we were passed a NULL.
+		return;													// We go, blank screen.
+	} else if (text[0]=='\0') {							// Else, not a NULL. If we were passed an empty string..
+		return;													// Again we bail. blank scren.
+	} else {														// Else, we actually have some text..
+		mTextBuff = (char*)malloc(strlen(text) + 1);	// Grab enough RAM for this new block of text.
+		if (mTextBuff) {										// If we got the block..
+			strcpy(mTextBuff, text);						// Copy in the text.
+		}
+	}
 }
 
 
 // Add this cstring to the end of our text.
 void lineManager::appendText(char* text) {
 
-  char* buff;
-  int   numNewChars;
-  int   numOurChars;
-  int   totalChars;
-
-  if (text) {                                   // Sanity, did they pass us a NULL?
-    if (text[0] != '\0') {                      // I don't like the look of these people. Did they pass us an empty string?
-      numNewChars = strlen(text);               // save off how many charactors they gave us.
-      numOurChars = strlen(mTextBuff);          // save off how many charactors we have.
-      totalChars = numOurChars + numNewChars;   // Figure total buffer length.
-      buff = (char*)malloc(totalChars + 1);     // Allocate the buffer.
-      if (buff) {                               // If we got one.
-        trimList(numOurChars-1);                // Trim outdated line.
-        if (mTextBuff) {
-          strcpy(buff, mTextBuff);                // Copy over our text.
-          strcpy(&buff[numOurChars], text);       // Then their text. (on top of the last '\0')
-          free(mTextBuff);                        // loose our old text buffer.
-          mTextBuff = buff;                       // Point to this shiny new one.
-        } else {                                  // Wait, we have no buffer at all?
-          strcpy(buff, text);                     // No worries mate! We do this kind of thing all the time!
-          mTextBuff = buff;                       // And there you go, your own text buffer. We won't tell anyone.
-        }
-      }
-    }
-  }
+	char* buff;
+	int   numNewChars;
+	int   numOurChars;
+	int   totalChars;
+	
+	if (text) {                                   // Sanity, did they pass us a NULL?
+		if (text[0] != '\0') {                      // I don't like the look of these people. Did they pass us an empty string?
+			numNewChars = strlen(text);               // save off how many charactors they gave us.
+			numOurChars = strlen(mTextBuff);          // save off how many charactors we have.
+			totalChars = numOurChars + numNewChars;   // Figure total buffer length.
+			buff = (char*)malloc(totalChars + 1);     // Allocate the buffer.
+			if (buff) {                               // If we got one.
+				trimLastMarker();								// There is a really good chance the last line will change. Knock out the old one.
+				if (mTextBuff) {
+					strcpy(buff, mTextBuff);                // Copy over our text.
+					strcpy(&buff[numOurChars], text);       // Then their text. (on top of the last '\0')
+					free(mTextBuff);                        // loose our old text buffer.
+					mTextBuff = buff;                       // Point to this shiny new one.
+				} else {                                  // Wait, we have no buffer at all?
+					strcpy(buff, text);                     // No worries mate! We do this kind of thing all the time!
+					mTextBuff = buff;                       // And there you go, your own text buffer. We won't tell anyone.
+					indexAll();										// we try this?
+				}
+			}
+		}
+	}
 }
 
 
@@ -275,21 +282,21 @@ void lineManager::deleteText(int startIndex, int numChars) {
 // Index all the text.
 void lineManager::indexAll(void) {
 
-  int   index;
-  bool  hardBreak;
-  bool  endOfText;
-
-  dumpList();
-  if (mTextBuff) {
-    if (strlen(mTextBuff) > 0) {
-      index = 0;
-      hardBreak = true;
-      endOfText = false;
-      while (!endOfText) {
-        endOfText = newMarker(&index, &hardBreak);
-      }
-    }
-  }
+	int	index;
+	bool	hardBreak;
+	bool	endOfText;
+	
+	dumpList();
+	if (mTextBuff) {
+		if (strlen(mTextBuff) > 0) {
+			index = 0;
+			hardBreak = true;
+			endOfText = false;
+			while (!endOfText) {
+				endOfText = newMarker(&index, &hardBreak);
+			}
+		}
+	}
 }
 
 
@@ -351,7 +358,7 @@ bool lineManager::upToDate(void) {
         }
       }
     }
-  return true;                                  // These cases, no text. Any answer is the corect sorted answer.
+  return true;                                  // These cases, no text. Any answer is the correct sorted answer.
 }
 
 
@@ -381,20 +388,20 @@ char* lineManager::formatLine(int lineNum) {
 // and return true for more text available.
 bool lineManager::newMarker(int* index, bool* hardBreak) {
 
-  lineMarker* aMarker;
-  bool        endOfText;
+	lineMarker*	aMarker;
+	bool        endOfText;
 
-  endOfText = true;
-  if (mTextBuff) {                    // FIRST, we have text?
-    if (mTextBuff[*index] != '\0') {  // And we're not at the end of the line?
-      aMarker = new lineMarker(*index,*hardBreak,mWidthChars,mTextBuff);
-      addToEnd(aMarker);
-      *index = aMarker->getEndIndex() + 1;
-      *hardBreak = aMarker->getBreak();
-      endOfText = mTextBuff[*index] == '\0';
-    }
-  }
-  return endOfText;
+	endOfText = true;
+	if (mTextBuff) {                    // FIRST, we have text?
+		if (mTextBuff[*index] != '\0') {  // And we're not at the end of the line?
+			aMarker = new lineMarker(*index,*hardBreak,mWidthChars,mTextBuff);
+			addToEnd(aMarker);
+			*index = aMarker->getEndIndex() + 1;
+			*hardBreak = aMarker->getBreak();
+			endOfText = mTextBuff[*index] == '\0';
+		}
+	}
+	return endOfText;
 }
 
 
@@ -432,7 +439,17 @@ int lineManager::getLineNum(int index) {
 }
 
 
- 
+// When appending text, its good to knock out the last marker and figure it out fresh.
+void lineManager::trimLastMarker(void) {
+
+	lineMarker*	lastLine;
+	
+	lastLine = (lineMarker*)getLast();
+   unlinkObj(lastLine);
+   delete(lastLine);
+}
+
+
 // Find the line that index is in, delete it and its tail.
 void  lineManager::trimList(int index) {
 

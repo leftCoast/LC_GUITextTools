@@ -47,7 +47,7 @@ void  liveText::setCalcColor(void) {
 	bool		savedTransp;
 	colorObj	aColor;
 	
-	aColor = Map(frame);		// Calculate the color.
+	aColor = map(frame);		// Calculate the color.
 	savedTransp = transp;	// Save off our transparent setting.
 	setColors(&aColor);		// set the color it.
 	transp = savedTransp;	// Restore the transp setting.

@@ -20,7 +20,7 @@ enum scrollCom  { topOfText, endOfText, lineAtBottom, lineAtTop, indexAtBottom, 
 // lineMarker, oh boy!
 // We need to break the text into lines. When flowing text on a screen, there are rules.
 // Hard breaks, soft breaks, leading spaces. Bla bla bla. We read in a long buffer. At some
-// point we'll mark off an area we will call a line. And, all the charactors of the buffer must
+// point we'll mark off an area we will call a line. And, all the characters of the buffer must
 // be accounted for. Why? Because the calling object will ask if we cover index x or not. You
 // can't have any "holes". Also, We need to be able to format ourselves into a sutable output
 // string. That's the whole deal really. Output of formatted text.
@@ -77,7 +77,7 @@ class lineManager : public linkList {
 };
 
 
-// I know I'm a rectangular draw abject. I have a manager object with a 
+// I know I'm a rectangular draw object. I have a manager object with a 
 // list of text lines to keep updated on the screen.
 class textView :  public drawObj {
 

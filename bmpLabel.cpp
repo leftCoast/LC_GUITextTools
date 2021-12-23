@@ -22,8 +22,6 @@ bool bmpLabel::offScreenDraw(void) {
 	rect			temp;
 	offscreen	vPort;
 	bitmap		ourBMap;
-	int			orgX;
-	int			orgY;
 	
 	if (backdrop) {
 		if (ourBMap.setSize(width,height)) {				// If we can allocate the RAM for the bitmap..

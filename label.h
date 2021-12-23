@@ -45,7 +45,7 @@ class label : public drawObj {
   				void 	setValue(float val);
   				void 	setValue(double val);
   				void 	setValue(char* str);
-				int	getNumChars(void);		// We want to know how long the string is..
+				int	getNumChars(void);		// We want to know how long the string is.. (MINUS THE '\0')
 				int	getViewChars(void);		// We want to know how many chars can we display?
 				void	getText(char* inBuff);	// We asked above how much you have. Hand it over.
   				int 	getTextWidth(void);		// How wide in pixels is our text?

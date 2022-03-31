@@ -1,4 +1,4 @@
-#include "label.h"
+#include <label.h>
 #include <resizeBuff.h>
 
 
@@ -152,6 +152,7 @@ void label::setValue(double val) {
 
 
 void label::setValue(float val) {
+  
   double dVal = val;
   setValue(dVal); 
 }
@@ -197,7 +198,7 @@ void label::drawSelf(void) {
 
 	int	charDif; 
    int	numCharsDisp; 
-	
+
 	if (buff) {																			// Sanity. If we have anything to display..
 		numCharsDisp = getViewChars();											// Save off how many chars we can display.
 		if (transp) {																	// If we don't draw background bits..

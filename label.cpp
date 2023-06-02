@@ -4,6 +4,19 @@
 
 char  temp[TEMP_BUFF_SIZE];
 
+/*
+// Real computers don't have dtostrf(). But this stuff is for Arduino, hence..
+#ifdef dtostrf
+#undef dtostrf
+#endif
+//#ifndef dtostrf
+
+void dtostrf(float val,int min,int prec,char* buff) {
+	sprintf(buff,"%f",prec,val);
+}
+
+//#endif
+*/
 
 label::label() : drawObj() { initLabel(); }
 

@@ -56,7 +56,7 @@ class lineManager : public linkList {
 	virtual	~lineManager(void);
 
 				void        setWidth(int widthChars);						// Set how many chars wide the lines are.
-				void        setText(char* text);								// A possibly giant NULL terminated c string.
+				void        setText(const char* text);						// A possibly giant NULL terminated c string.
 				void        appendText(char* text);							// Add this to the end of our text.
 				void        insertText(int index,char* text);			// Stick a NULL terminated substring in at this index.
 				void        deleteText(int startIndex,int endIndex);	// Remove some text from middle, beginning? End?
@@ -90,7 +90,7 @@ class textView :  public drawObj {
           void        setTextColor(colorObj* tColor);             // Well, what about a color?
           void        setTextColors(colorObj* tColor,colorObj* bColor);
           void        setScroll(scrollCom choice,int inNum=0);    // Better look at the scrolling command list.
-  virtual void        setText(char* text);                        // Replace our text buff with a copy of this.
+  virtual void        setText(const char* text);                  // Replace our text buff with a copy of this.
   virtual void        appendText(char* text);                     // Add this to the end of our text.
   virtual void			 appendText(int inVal);								// I know, its an integer. Make it text.
   virtual void			 appendText(char inChar);

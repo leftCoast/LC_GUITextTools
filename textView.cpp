@@ -155,7 +155,7 @@ void lineManager::setWidth(int widthChars) {
 
 
 // A possibly giant NULL terminated c string.
-void lineManager::setText(char* text) {
+void lineManager::setText(const char* text) {
 
 	dumpList();													// Dump the list of line formatting.
 	if (mTextBuff) {											// If we have a text buffer..
@@ -580,7 +580,7 @@ void textView::setScroll(scrollCom choice,int inNum) {
 
   
 // Replace our text buff with a copy of this.
-void textView::setText(char* text) {
+void textView::setText(const char* text) {
 
   mManager.setText(text);
   needRefresh = true;

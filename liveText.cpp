@@ -16,7 +16,7 @@ liveText::liveText(int x,int y,int width,int height,int framerateMs,bool inLoop)
 liveText::~liveText(void) { }
 
 
-// Add in a color to out timed color map.
+// Add in a color to our timed color map.
 void  liveText::addAColor(int timeMs,colorObj* color) { 
 
 	hookup();											// We add colors at the start. Good hookup() time!
@@ -56,18 +56,17 @@ void  liveText::setCalcColor(void) {
 
 void liveText::idle(void) {
   
-  
-	if (ding()&&!holding) {							// First check the timer.
-		start();											// Reset the timer from now. Allows hold to work.
-		if (frame<maxTime) {							// We still have frames to go?
-			setCalcColor();							// Set the color;
-			frame = frame + (getTime()/1000.0);	// Step the frame counter. Units are ms.
-		} else {											// We're done with our frames.
-			if (loop) {									// If we loop, we start over.
-				frame = 0;								// If so, reset the frame thing.
-			} else {										// If we don't loop.
-				setCalcColor();						// Set the last color;
-				hold();									// We hold.
+	if (ding()&&!holding) {					// First check the timer.
+		start();									// Reset the timer from now. Allows hold to work.
+		if (frame<maxTime) {					// We still have frames to go?
+			setCalcColor();					// Set the color;
+			frame = frame + getTime();		// Step the frame counter. Units are ms.
+		} else {									// We're done with our frames.
+			if (loop) {							// If we loop, we start over.
+				frame = 0;						// If so, reset the frame thing.
+			} else {								// If we don't loop.
+				setCalcColor();				// Set the last color;
+				hold();							// We hold.
 			}
 		}
 	}

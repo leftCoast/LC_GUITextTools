@@ -35,16 +35,16 @@ class label : public drawObj {
   				label(label* aLabel);
 	virtual	~label(void);
   
-  				void 	setTextSize(int size);  // 1,2,3.. - Ends up as multiples of 8 pixals.
-  				void 	setJustify(int inJustify);
-  				void 	setColors(colorObj* tColor);
-				void 	setColors(colorObj* tColor, colorObj* bColor);
-  				void 	setPrecision(int inPrec);
+	virtual	void 	setTextSize(int size);  // 1,2,3.. - Ends up as multiples of 8 pixals.
+	virtual	void 	setJustify(int inJustify);
+	virtual	void 	setColors(colorObj* tColor);
+	virtual	void 	setColors(colorObj* tColor, colorObj* bColor);
+	virtual	void 	setPrecision(int inPrec);
 	virtual	void 	setValue(int val);
-  				void 	setValue(unsigned long val);
-  				void 	setValue(float val);
-  				void 	setValue(double val);
-  				void 	setValue(char* str);
+	virtual	void 	setValue(unsigned long val);
+	virtual	void 	setValue(float val);
+	virtual	void 	setValue(double val);
+	virtual	void 	setValue(char* str);
 				int	getNumChars(void);		// We want to know how long the string is.. (MINUS THE '\0')
 				int	getViewChars(void);		// We want to know how many chars can we display?
 				void	getText(char* inBuff);	// We asked above how much you have. Hand it over.

@@ -22,7 +22,7 @@ label::label() : drawObj() { initLabel(); }
 
 
 // These next two actually fit our rectangle to the text.
-label::label(char* inText)
+label::label(const char* inText)
 	: drawObj() {
 
 	initLabel();
@@ -31,7 +31,7 @@ label::label(char* inText)
 }
 
 
-label::label(char* inText, int inSize) 
+label::label(const char* inText, int inSize) 
 	: drawObj() {
 
 	initLabel();
@@ -45,7 +45,7 @@ label::label(int inLocX, int inLocY, int inWidth,int inHeight)
 	: drawObj(inLocX,inLocY,inWidth,inHeight) { initLabel(); }
 
 
-label::label(int inLocX, int inLocY, int inWidth,int inHeight, char* inText)
+label::label(int inLocX, int inLocY, int inWidth,int inHeight,const char* inText)
 	: drawObj(inLocX,inLocY,inWidth,inHeight) {
 	
 	initLabel();
@@ -53,7 +53,7 @@ label::label(int inLocX, int inLocY, int inWidth,int inHeight, char* inText)
 }
 
 
-label::label(int inLocX, int inLocY, int inWidth,int inHeight, char* inText,int textSize)
+label::label(int inLocX, int inLocY, int inWidth,int inHeight,const char* inText,int textSize)
 	: drawObj(inLocX,inLocY,inWidth,inHeight) {
 
 	initLabel();
@@ -62,7 +62,7 @@ label::label(int inLocX, int inLocY, int inWidth,int inHeight, char* inText,int 
 }
 
 
-label::label(rect* inRect,char* inText,int textSize)
+label::label(rect* inRect,const char* inText,int textSize)
 	: drawObj(inRect) {
 
 	initLabel();
@@ -171,7 +171,7 @@ void label::setValue(float val) {
 }
 
 
-void label::setValue(char* str) {
+void label::setValue(const char* str) {
 
 	int numChars;
 

@@ -26,12 +26,12 @@ class label : public drawObj {
 
 	public :
   				label();
-  				label(char* inText);
-  				label(char* inText, int inSize);
+  				label(const char* inText);
+  				label(const char* inText, int inSize);
   				label(int inLocX, int inLocY, int inWidth,int inHeight);
-  				label(int inLocX, int inLocY, int inWidth,int inHeight, char* inText);
-  				label(int inLocX, int inLocY, int inWidth,int inHeight, char* inText,int textSize);
-  				label(rect* inRect,char* inText,int textSize=1);
+  				label(int inLocX, int inLocY, int inWidth,int inHeight,const char* inText);
+  				label(int inLocX, int inLocY, int inWidth,int inHeight,const char* inText,int textSize);
+  				label(rect* inRect,const char* inText,int textSize=1);
   				label(label* aLabel);
 	virtual	~label(void);
   
@@ -44,7 +44,7 @@ class label : public drawObj {
 	virtual	void 	setValue(unsigned long val);
 	virtual	void 	setValue(float val);
 	virtual	void 	setValue(double val);
-	virtual	void 	setValue(char* str);
+	virtual	void 	setValue(const char* str);
 				int	getNumChars(void);		// We want to know how long the string is.. (MINUS THE '\0')
 				int	getViewChars(void);		// We want to know how many chars can we display?
 				void	getText(char* inBuff);	// We asked above how much you have. Hand it over.

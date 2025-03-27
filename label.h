@@ -53,7 +53,7 @@ class label : public drawObj {
   
 	virtual	void drawSelf(void);
 
-//private :
+//protected :
 	void initLabel(void);
   
 	int		textSize;

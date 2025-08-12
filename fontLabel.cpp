@@ -11,11 +11,18 @@ fontLabel::fontLabel(int inX, int inY, int inWidth,int inHeight)
 fontLabel::~fontLabel(void) {  }
 
 
-void fontLabel::setFont(const GFXfont* font,int offset) {
+void fontLabel::setFont(GFXfont* font,int yOffset) {
 	
 	ourFont = font;
-	fontOffset = offset;
+	fontOffset = yOffset;
 	setNeedRefresh();
+}
+
+
+void fontLabel::setFont(GFXfont* font,int inHeight,int yOffset) {
+	
+	height = inHeight;
+	setFont(font,yOffset);
 }
 
 
@@ -48,5 +55,6 @@ void fontLabel::drawSelf(void) {
 	}
 	screen->setCursor(x+offset,yLoc);
 	screen->drawText(buff);
+	//screen->drawRect(this,&green);
 	screen->setFont(NULL);
 }

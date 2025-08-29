@@ -55,6 +55,6 @@ void fontLabel::drawSelf(void) {
 	}
 	screen->setCursor(x+offset,yLoc);
 	screen->drawText(buff);
-	//screen->drawRect(this,&green);
+	//screen->drawRect(this,&red);
 	screen->setFont(NULL);
 }

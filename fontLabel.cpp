@@ -7,6 +7,10 @@ fontLabel::fontLabel(void) : label() {  }
 fontLabel::fontLabel(int inX, int inY, int inWidth,int inHeight)
   : label(inX,inY,inWidth,inHeight) { }
 
+
+fontLabel::fontLabel(rect* inRect)
+  : label(inRect->x,inRect->y,inRect->width,inRect->height) { }
+  
   
 fontLabel::~fontLabel(void) {  }
 

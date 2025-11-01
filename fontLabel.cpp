@@ -15,7 +15,7 @@ fontLabel::fontLabel(rect* inRect)
 fontLabel::~fontLabel(void) {  }
 
 
-void fontLabel::setFont(GFXfont* font,int yOffset) {
+void fontLabel::setFont(const GFXfont* font,int yOffset) {
 	
 	ourFont = font;
 	fontOffset = yOffset;
@@ -23,7 +23,7 @@ void fontLabel::setFont(GFXfont* font,int yOffset) {
 }
 
 
-void fontLabel::setFont(GFXfont* font,int inHeight,int yOffset) {
+void fontLabel::setFont(const GFXfont* font,int inHeight,int yOffset) {
 	
 	height = inHeight;
 	setFont(font,yOffset);
